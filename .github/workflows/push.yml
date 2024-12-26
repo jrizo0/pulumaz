@@ -26,12 +26,12 @@ jobs:
       #   with:
       #     creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Setup pulumi-azure environment
-        run: |
-          export ARM_CLIENT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.clientId')
-          export ARM_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r '.clientSecret')
-          export ARM_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | jq -r '.subscriptionId')
-          export ARM_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.tenantId')
+      # - name: Setup pulumi-azure environment
+      #   run: |
+      #     export ARM_CLIENT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.clientId')
+      #     export ARM_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r '.clientSecret')
+      #     export ARM_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | jq -r '.subscriptionId')
+      #     export ARM_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.tenantId')
 
       # - name: Azure CLI script
       #   uses: azure/cli@v2
@@ -41,7 +41,7 @@ jobs:
       #       az account show
 
       - name: Run pnpm install
-        run: pnpm install --frozen-lockfile --prefer-offline --ignore-scripts
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - uses: pulumi/actions@v4
         with:
@@ -50,7 +50,7 @@ jobs:
           work-dir: ./infra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          # ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          # ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          # ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          # ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
