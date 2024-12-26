@@ -15,3 +15,5 @@ app.http("httpTrigger", {
   route: "{*proxy}",
   handler: azureHonoHandler(api.fetch),
 });
+
+export default app;

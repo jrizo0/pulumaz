@@ -34,10 +34,6 @@ importers:
         version: 2.1.8(@types/node@20.17.10)
 
   packages/funcs:
-    dependencies:
-      '@pulumaz/core':
-        specifier: workspace:*
-        version: link:../core
     devDependencies:
       '@azure/functions':
         specifier: ^4.6.0
