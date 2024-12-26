@@ -21,10 +21,10 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # - name: Azure Login
+      #   uses: azure/login@v2
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Setup pulumi-azure environment
         run: |
@@ -33,12 +33,12 @@ jobs:
           export ARM_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | jq -r '.subscriptionId')
           export ARM_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.tenantId')
 
-      - name: Azure CLI script
-        uses: azure/cli@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az account show
+      # - name: Azure CLI script
+      #   uses: azure/cli@v2
+      #   with:
+      #     azcliversion: latest
+      #     inlineScript: |
+      #       az account show
 
       - name: Run pnpm install
         run: pnpm install --frozen-lockfile --prefer-offline --ignore-scripts
@@ -50,3 +50,7 @@ jobs:
           work-dir: ./infra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          # ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          # ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          # ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          # ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
