@@ -43,7 +43,7 @@ jobs:
       - name: Run pnpm install
         run: pnpm install --frozen-lockfile --prefer-offline --ignore-scripts
 
-      - uses: pulumi/actions@v3
+      - uses: pulumi/actions@v6
         with:
           command: preview
           stack-name: dev
