@@ -80,7 +80,7 @@ const app = new azurenative.web.WebApp("api", {
         value: storageConnectionString,
       },
       // { name: "WEBSITE_CONTENTSHARE", value: "api" }, // Use the function app name
-      { name: "SCM_DO_BUILD_DURING_DEPLOYMENT", value: "true" },
+      // { name: "SCM_DO_BUILD_DURING_DEPLOYMENT", value: "true" },
       {
         name: "APPINSIGHTS_INSTRUMENTATIONKEY",
         value: insights.instrumentationKey, // conexion key to Application Insights
