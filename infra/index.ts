@@ -75,10 +75,10 @@ const app = new azurenative.web.WebApp("api", {
       { name: "WEBSITE_NODE_DEFAULT_VERSION", value: "~20" },
       { name: "WEBSITE_RUN_FROM_PACKAGE", value: codeBlobUrl },
       { name: "FUNCTIONS_NODE_BLOCK_ON_ENTRY_POINT_ERROR", value: "true" },
-      {
-        name: "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
-        value: storageConnectionString,
-      },
+      // {
+      //   name: "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+      //   value: storageConnectionString,
+      // },
       // { name: "WEBSITE_CONTENTSHARE", value: "api" }, // Use the function app name
       // { name: "SCM_DO_BUILD_DURING_DEPLOYMENT", value: "true" },
       {
