@@ -4,8 +4,8 @@ on:
     branches:
       - main
 jobs:
-  update:
-    name: Update
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +48,6 @@ jobs:
           command: up
           stack-name: dev
           work-dir: ./infra
-          pulumi-version: 3.144.1
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}

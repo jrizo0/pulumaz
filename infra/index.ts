@@ -3,7 +3,7 @@ import * as pulumi from "@pulumi/pulumi";
 import { getConnectionString, signedBlobReadUrl } from "./helpers";
 
 const resourceGroup = new azurenative.resources.ResourceGroup("resourcegroup", {
-  location: "eastus2",
+  location: "canadacentral",
 });
 
 const storageAccount = new azurenative.storage.StorageAccount(
@@ -14,7 +14,7 @@ const storageAccount = new azurenative.storage.StorageAccount(
       name: azurenative.storage.SkuName.Standard_LRS,
     },
     kind: azurenative.storage.Kind.StorageV2,
-  },
+  }
 );
 
 // Function code archives will be stored in this container.
@@ -45,13 +45,13 @@ const plan = new azurenative.web.AppServicePlan("appserviceplan", {
 // Build the connection string and zip archive's SAS URL. They will go to Function App's settings.
 const storageConnectionString = getConnectionString(
   resourceGroup.name,
-  storageAccount.name,
+  storageAccount.name
 );
 const codeBlobUrl = signedBlobReadUrl(
   codeBlob,
   codeContainer,
   storageAccount,
-  resourceGroup,
+  resourceGroup
 );
 
 const insights = new azurenative.insights.Component("insightscomponent", {
