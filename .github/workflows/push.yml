@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: "pnpm"
 
       # - name: Azure Login
       #   uses: azure/login@v2
@@ -40,8 +40,10 @@ jobs:
       #     inlineScript: |
       #       az account show
 
-      - name: Run pnpm install
-        run: pnpm install --frozen-lockfile --prefer-offline --ignore-scripts
+      # - name: Run pnpm install
+      #   run: pnpm install --frozen-lockfile --prefer-offline --ignore-scripts
+      - name: Run npm install
+        run: npm install
 
       - uses: pulumi/actions@v6
         with:

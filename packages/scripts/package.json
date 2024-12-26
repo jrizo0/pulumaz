@@ -2,7 +2,7 @@
   "name": "@pulumaz/scripts",
   "version": "0.0.0",
   "dependencies": {
-    "@pulumaz/core": "workspace:*"
+    "@pulumaz/core": "*"
   },
   "scripts": {},
   "devDependencies": {
