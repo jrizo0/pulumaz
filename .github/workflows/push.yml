@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
@@ -26,6 +26,13 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - name: Setup pulumi-azure environment
+        run: |
+          export ARM_CLIENT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.clientId')
+          export ARM_CLIENT_SECRET=$(echo $AZURE_CREDENTIALS | jq -r '.clientSecret')
+          export ARM_SUBSCRIPTION_ID=$(echo $AZURE_CREDENTIALS | jq -r '.subscriptionId')
+          export ARM_TENANT_ID=$(echo $AZURE_CREDENTIALS | jq -r '.tenantId')
+
       - name: Azure CLI script
         uses: azure/cli@v2
         with:
@@ -33,11 +40,13 @@ jobs:
           inlineScript: |
             az account show
 
-      - run: pnpm install --frozen-lockfile --prefer-offline --ignore-scripts
+      - name: Run pnpm install
+        run: pnpm install --frozen-lockfile --prefer-offline --ignore-scripts
 
-      - uses: pulumi/actions@v3
+      - uses: pulumi/actions@v4
         with:
           command: up
           stack-name: dev
+          work-dir: ./infra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
