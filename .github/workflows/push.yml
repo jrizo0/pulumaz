@@ -41,11 +41,11 @@ jobs:
       #       az account show
 
       - name: Run pnpm install
-        run: pnpm install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline --ignore-scripts
 
-      - uses: pulumi/actions@v4
+      - uses: pulumi/actions@v3
         with:
-          command: up
+          command: preview
           stack-name: dev
           work-dir: ./infra
         env:
