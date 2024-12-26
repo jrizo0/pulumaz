@@ -1,9 +1,8 @@
 {
   "name": "@pulumaz/functions",
   "version": "0.0.0",
-  "main": "index.js",
+  "main": "src/functions/index.js",
   "scripts": {
-    "clean": "rimraf dist",
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
