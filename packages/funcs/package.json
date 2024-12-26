@@ -1,0 +1,20 @@
+{
+  "name": "@pulumaz/functions",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@pulumaz/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@azure/functions": "^4.6.0",
+    "@types/node": "20.x",
+    "azure-functions-core-tools": "^4.0.6610",
+    "esbuild": "^0.20.0",
+    "rimraf": "^5.0.0"
+  }
+}

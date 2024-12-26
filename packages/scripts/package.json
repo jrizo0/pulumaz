@@ -1,13 +1,10 @@
 {
-  "name": "@monorepo-template/scripts",
+  "name": "@pulumaz/scripts",
   "version": "0.0.0",
   "dependencies": {
-    "@monorepo-template/core": "*",
-    "sst": "*"
+    "@pulumaz/core": "workspace:*"
   },
-  "scripts": {
-    "shell": "sst shell tsx"
-  },
+  "scripts": {},
   "devDependencies": {
     "@types/node": "^20.14.11",
     "tsx": "^4.7.2"

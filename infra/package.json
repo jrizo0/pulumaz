@@ -1,0 +1,11 @@
+{
+  "name": "@pulumaz/infra",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "scripts": {},
+  "dependencies": {
+    "@pulumi/azure": "^6.14.0",
+    "@pulumi/azure-native": "^2.79.0",
+    "@pulumi/pulumi": "^3.144.1"
+  }
+}
