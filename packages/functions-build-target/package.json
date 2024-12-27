@@ -1,0 +1,21 @@
+{
+  "name": "@pulumaz/functions-build-target",
+  "version": "0.0.0",
+  "main": "build/httpTrigger.js",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "prebuild:deploy": "npm run clean",
+    "build:deploy": "tsc && bash -c 'bash build.sh'",
+    "esbuild": "esbuild src/functions/*.ts --bundle --platform=node --target=node20 --outdir=dist/src/functions --external:@azure/functions",
+    "watch": "esbuild src/functions/*.ts --bundle --platform=node --target=node20 --outdir=dist/src/functions --external:@azure/functions --watch",
+    "clean": "rimraf dist",
+    "prestart": "npm run clean && npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@azure/functions": "^4.6.0",
+    "hono": "^4.6.14"
+  }
+}

@@ -5,6 +5,7 @@
   "dependencies": {
     "@pulumi/azure": "^6.14.0",
     "@pulumi/azure-native": "^2.79.0",
+    "@pulumi/command": "^1.0.1",
     "@pulumi/pulumi": "^3.144.1"
   }
 }

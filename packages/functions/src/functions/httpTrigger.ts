@@ -1,4 +1,3 @@
-// src/functions/httpTrigger.ts
 import { app } from "@azure/functions";
 import { api } from "../app";
 import { azureHonoHandler } from "../hono-adapter";
@@ -15,5 +14,3 @@ app.http("httpTrigger", {
   route: "{*proxy}",
   handler: azureHonoHandler(api.fetch),
 });
-
-export default app;

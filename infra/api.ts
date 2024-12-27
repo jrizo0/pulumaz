@@ -1,9 +1,10 @@
 import * as azurenative from "@pulumi/azure-native";
 import * as pulumi from "@pulumi/pulumi";
 import { getConnectionString, signedBlobReadUrl } from "./helpers";
+import { local } from "@pulumi/command";
 
 const resourceGroup = new azurenative.resources.ResourceGroup("resourcegroup", {
-  location: "eastus2",
+  location: "canadacentral",
 });
 
 const storageAccount = new azurenative.storage.StorageAccount(
@@ -23,13 +24,23 @@ const codeContainer = new azurenative.storage.BlobContainer("blobcontainer", {
   accountName: storageAccount.name,
 });
 
+// Build functions package
+const build = new local.Command("buildCommand", {
+    create: "bun run --filter '*/functions' build2:deploy",
+});
+
 // Upload Azure Function's code as a zip archive to the storage account.
 const codeBlob = new azurenative.storage.Blob("blob", {
   resourceGroupName: resourceGroup.name,
   accountName: storageAccount.name,
   containerName: codeContainer.name,
-  source: new pulumi.asset.FileArchive("../packages/functions"),
-});
+  source: new pulumi.asset.FileArchive("../packages/functions-build"),
+}, { dependsOn: build });
+
+// Remove build folder
+new local.Command("removeCommand", {
+    create: "rm -rf ../packages/functions-build",
+}, { dependsOn: codeBlob });
 
 // Define a Consumption Plan for the Function App.
 // You can change the SKU to Premium or App Service Plan if needed.
@@ -75,6 +86,7 @@ const app = new azurenative.web.WebApp("api", {
       { name: "WEBSITE_NODE_DEFAULT_VERSION", value: "~20" },
       { name: "WEBSITE_RUN_FROM_PACKAGE", value: codeBlobUrl },
       { name: "FUNCTIONS_NODE_BLOCK_ON_ENTRY_POINT_ERROR", value: "true" },
+      // { name: "SCM_DO_BUILD_DURING_DEPLOYMENT", value: "true" }, // interesting, not tested
       {
         name: "APPINSIGHTS_INSTRUMENTATIONKEY",
         value: insights.instrumentationKey, // conexion key to Application Insights
@@ -86,4 +98,8 @@ const app = new azurenative.web.WebApp("api", {
 });
 
 // export const api = pulumi.interpolate`https://${app.defaultHostName}`;
-export const apiEndpoint = app.defaultHostName.apply((ep) => `https://${ep}`);
+// export const apiEndpoint = app.defaultHostName.apply((ep) => `https://${ep}`);
+
+export const outputs = {
+  api: app.defaultHostName.apply((ep) => `https://${ep}`),
+}
