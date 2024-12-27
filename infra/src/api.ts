@@ -26,7 +26,7 @@ const codeContainer = new azurenative.storage.BlobContainer("blobcontainer", {
 
 // Build functions package
 const build = new local.Command("buildCommand", {
-  create: "bun run --filter '*/functions' build2:deploy",
+  create: "bun run --filter '*/functions' build:deploy",
   triggers: [Date.now().toString()]  // Ensure the command runs every time by using a changing trigger
 });
 
