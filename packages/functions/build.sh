@@ -1,5 +1,5 @@
 #!/bin/bash
-BUILD_DIR=functions-built
+BUILD_DIR=functions-build
 rimraf $BUILD_DIR
 rimraf ../$BUILD_DIR
 mkdir $BUILD_DIR

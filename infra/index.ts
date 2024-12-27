@@ -2,8 +2,8 @@ import { readdirSync } from "fs";
 
 const outputs = {};
 
-for (const value of readdirSync("./infra/")) {
-  const result = require("./infra/" + value);
+for (const value of readdirSync("./src/")) {
+  const result = require("./src/" + value);
   if (result.outputs) Object.assign(outputs, result.outputs);
 }
 
