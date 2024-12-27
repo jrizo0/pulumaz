@@ -11,6 +11,9 @@
         "isEnabled": true,
         "excludedTypes": "Request"
       }
+    },
+    "logLevel": {
+      "default": "Trace"
     }
   },
   "extensionBundle": {

@@ -79,7 +79,7 @@ const insights = new azurenative.insights.Component("insightscomponent", {
 const app = new azurenative.web.WebApp("api", {
   resourceGroupName: resourceGroup.name,
   serverFarmId: plan.id,
-  kind: "functionapp",
+  kind: "functionapp,linux",
   siteConfig: {
     appSettings: [
       { name: "AzureWebJobsStorage", value: storageConnectionString },
@@ -88,14 +88,16 @@ const app = new azurenative.web.WebApp("api", {
       { name: "WEBSITE_NODE_DEFAULT_VERSION", value: "~20" },
       { name: "WEBSITE_RUN_FROM_PACKAGE", value: codeBlobUrl },
       { name: "FUNCTIONS_NODE_BLOCK_ON_ENTRY_POINT_ERROR", value: "true" },
-      { name: "SCM_DO_BUILD_DURING_DEPLOYMENT", value: "true" }, // seems to be the solution
+      { name: "SCM_DO_BUILD_DURING_DEPLOYMENT", value: "true" },
       {
         name: "APPINSIGHTS_INSTRUMENTATIONKEY",
         value: insights.instrumentationKey, // conexion key to Application Insights
       },
+      { name: "UPDATE_HASH", value: Date.now().toString() },
     ],
     http20Enabled: true,
     nodeVersion: "~20",
+    linuxFxVersion: "Node|20",
   },
 });
 
