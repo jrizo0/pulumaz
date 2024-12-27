@@ -1,8 +1,12 @@
 import { readdirSync } from "fs";
 
-export const outputs = {};
+const files = readdirSync("./src/");
 
-for (const value of readdirSync("./src/")) {
+for (const value of files) {
   const result = require("./src/" + value);
-  if (result.outputs) Object.assign(outputs, result.outputs);
+  if (result.outputs) {
+    for (const [key, val] of Object.entries(result.outputs)) {
+      exports[key] = val;
+    }
+  }
 }
