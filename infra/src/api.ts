@@ -35,7 +35,7 @@ const codeBlob = new azurenative.storage.Blob("blob", {
   resourceGroupName: resourceGroup.name,
   accountName: storageAccount.name,
   containerName: codeContainer.name,
-  source: new pulumi.asset.FileArchive("../packages/functions-build"),
+  source: new pulumi.asset.FileArchive("../packages/functions")
 }, { dependsOn: build });
 
 // Remove build folder
