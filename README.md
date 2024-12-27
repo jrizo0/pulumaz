@@ -10,7 +10,7 @@ It's using:
 After cloning the repo:
 
 - Change all references to `pulumaz` to your project/org name
-- Remove the package functions-build-target (was just for reference for how the out build of the functions pckg should look like)
+- Remove the package `functions-build-target` (was just for reference for how the output build of the functions pckg should look like)
 - Add github secrets: `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET`, `ARM_SUBSCRIPTION_ID`, `ARM_TENANT_ID`, `PULUMI_ACCESS_TOKEN`
 
 # Functions package deployment
@@ -25,6 +25,7 @@ I have tried a lot of things but the only way to make the azure functions to rec
 
 - https://stackoverflow.com/questions/59745819/different-ways-to-publish-azure-function
 - https://github.com/microsoft/ApplicationInsights-node.js/issues/1102
+- https://tryzero.com/blog/deploying-azure-functions-with-pulumi-and-zero
 
 # Roadmap
 
