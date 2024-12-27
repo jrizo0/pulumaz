@@ -53,6 +53,7 @@ const plan = new azurenative.web.AppServicePlan("appserviceplan", {
     name: "Y1",
     tier: "Dynamic",
   },
+  kind: 'linux'
 });
 
 // Build the connection string and zip archive's SAS URL. They will go to Function App's settings.
