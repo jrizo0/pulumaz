@@ -26,7 +26,8 @@ const codeContainer = new azurenative.storage.BlobContainer("blobcontainer", {
 
 // Build functions package
 const build = new local.Command("buildCommand", {
-    create: "bun run --filter '*/functions' build2:deploy",
+  create: "bun run --filter '*/functions' build2:deploy",
+  triggers: [Date.now().toString()]  // Ensure the command runs every time by using a changing trigger
 });
 
 // Upload Azure Function's code as a zip archive to the storage account.
@@ -39,7 +40,8 @@ const codeBlob = new azurenative.storage.Blob("blob", {
 
 // Remove build folder
 new local.Command("removeCommand", {
-    create: "rm -rf ../packages/functions-build",
+  create: "rm -rf ../packages/functions-build",
+  triggers: [Date.now().toString()]  // Ensure the command runs every time by using a changing trigger
 }, { dependsOn: codeBlob });
 
 // Define a Consumption Plan for the Function App.
