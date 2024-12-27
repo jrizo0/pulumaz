@@ -25,24 +25,25 @@ const codeContainer = new azurenative.storage.BlobContainer("blobcontainer", {
 });
 
 // Build functions package
-const build = new local.Command("buildCommand", {
-  create: "bun run --filter '*/functions' build2:deploy",
-  triggers: [Date.now().toString()]  // Ensure the command runs every time by using a changing trigger
-});
+// const build = new local.Command("buildCommand", {
+//   create: "bun run --filter '*/functions' build2:deploy",
+//   triggers: [Date.now().toString()]  // Ensure the command runs every time by using a changing trigger
+// });
 
 // Upload Azure Function's code as a zip archive to the storage account.
 const codeBlob = new azurenative.storage.Blob("blob", {
   resourceGroupName: resourceGroup.name,
   accountName: storageAccount.name,
   containerName: codeContainer.name,
-  source: new pulumi.asset.FileArchive("../packages/functions-build"),
-}, { dependsOn: build });
+  source: new pulumi.asset.FileArchive("../packages/functions"),
+});
+// , { dependsOn: build });
 
 // Remove build folder
-new local.Command("removeCommand", {
-  create: "rm -rf ../packages/functions-build",
-  triggers: [Date.now().toString()]  // Ensure the command runs every time by using a changing trigger
-}, { dependsOn: codeBlob });
+// new local.Command("removeCommand", {
+//   create: "rm -rf ../packages/functions-build",
+//   triggers: [Date.now().toString()]  // Ensure the command runs every time by using a changing trigger
+// }, { dependsOn: codeBlob });
 
 // Define a Consumption Plan for the Function App.
 // You can change the SKU to Premium or App Service Plan if needed.

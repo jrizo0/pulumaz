@@ -4,15 +4,8 @@
   "main": "dist/src/functions/httpTrigger.js",
   "scripts": {
     "prebuild": "npm run clean",
-    "build": "tsc",
-    "prebuild:deploy": "npm run clean",
-    "build:deploy": "tsc && bash -c 'bash build.sh'",
-
-    "prebuild2": "npm run clean",
-    "build2": "esbuild src/functions/*.ts --bundle --platform=node --target=node20 --outdir=dist/src/functions --external:@azure/functions",
-    "build2:deploy": "bun run build2 && bash -c 'bash build.sh'",
-    "build2:watch": "esbuild src/functions/*.ts --bundle --platform=node --target=node20 --outdir=dist/src/functions --external:@azure/functions --watch",
-
+    "build": "esbuild src/functions/*.ts --bundle --platform=node --target=node20 --outdir=dist/src/functions --external:@azure/functions-core",
+    "analyze": "esbuild src/functions/*.ts --bundle --platform=node --target=node20 --outdir=dist/src/functions --external:@azure/functions-core --analyze=verbose &> analyze",
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",
     "start": "func start",
