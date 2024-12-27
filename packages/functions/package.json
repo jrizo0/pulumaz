@@ -5,6 +5,7 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "esbuild src/functions/*.ts --bundle --platform=node --target=node20 --outdir=dist/src/functions --external:@azure/functions-core",
+    "build:deploy": "npm run build && bash -c 'bash build.sh'",
     "analyze": "esbuild src/functions/*.ts --bundle --platform=node --target=node20 --outdir=dist/src/functions --external:@azure/functions-core --analyze=verbose &> analyze",
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",

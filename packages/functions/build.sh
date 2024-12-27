@@ -13,7 +13,6 @@ jq '.name = "@pulumaz/functions-build" | del(.devDependencies) | .dependencies =
 mv $BUILD_DIR ../
 cd ../$BUILD_DIR
 npm install --workspaces=false --omit=dev
-ls
 
 # bun install --workspaces=false --omit=dev # not working, uses the node_modules from the root
 # npm install --workspaces=false --omit=dev
