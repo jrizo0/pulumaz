@@ -48,7 +48,7 @@ new local.Command("removeCommand", {
 // You can change the SKU to Premium or App Service Plan if needed.
 const plan = new azurenative.web.AppServicePlan("appserviceplan", {
   resourceGroupName: resourceGroup.name,
-  // reserved: true,
+  reserved: true,
   sku: {
     name: "Y1",
     tier: "Dynamic",
