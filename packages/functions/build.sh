@@ -7,7 +7,7 @@ cp -r dist $BUILD_DIR
 cp host.json $BUILD_DIR
 cp local.settings.json $BUILD_DIR
 
-jq '.name = "@pulumaz/functions-built" | del(.devDependencies) | .dependencies = {"@azure/functions": .dependencies."@azure/functions"}' package.json > temp.json && mv temp.json $BUILD_DIR/package.json
+jq '.name = "@pulumaz/functions-build" | del(.devDependencies) | .dependencies = {"@azure/functions": .dependencies."@azure/functions"}' package.json > temp.json && mv temp.json $BUILD_DIR/package.json
 
 mv $BUILD_DIR ../
 cd ../$BUILD_DIR
