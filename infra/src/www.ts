@@ -23,7 +23,6 @@ const staticWebApp = new azure.web.StaticSite("wwwappnextjs", {
   },
   repositoryUrl: "https://github.com/jrizo0/pulumaz",
   branch: "main",
-  repositoryToken: token.result,
   buildProperties: {
     appLocation: "packages/www/",
     outputLocation: "packages/www/.next",
@@ -32,7 +31,17 @@ const staticWebApp = new azure.web.StaticSite("wwwappnextjs", {
   },
 });
 
+// const staticApp_secrets = staticWebApp.id.apply(() => // assert staticApp is created
+//   azure.web.listStaticSiteSecretsOutput({
+//     resourceGroupName: resourceGroup.name,
+//     name: staticWebApp.name,
+//   })
+// );
+// const deploymentToken = staticApp_secrets.properties.apply((properties) => properties.apiToken);
+
+
 // Export the URL of the static web app
 export const outputs = {
   www: pulumi.interpolate`https://${staticWebApp.defaultHostname}`,
+  wwwName: staticWebApp.name
 }
