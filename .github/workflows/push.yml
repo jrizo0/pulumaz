@@ -55,7 +55,7 @@ jobs:
           app_location: "packages/www/" # App source code path
           # api_location: "" # Api source code path - optional
           output_location: "packages/www/.next" # Built app content directory - optional
-          app_build_command: "bun run --filter '*/www' build"
+          app_build_command: "bun i && bun run --filter '*/www' build"
           ###### End of Repository/Build Configurations ######
 
   # NOTE: Reference - https://github.com/jrizo0/nextjs-azure/blob/main/.github/workflows/azure-static-web-apps-polite-glacier-07081231e.yml
