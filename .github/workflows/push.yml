@@ -44,10 +44,7 @@ jobs:
             echo "deploymentToken=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.wwwName }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
 
       - name: build www
-        run: |
-          cd packages/www
-          bun install
-          bun run build
+        run: bun i && bun run --filter '*/www' build
 
       - name: Build And Deploy
         id: build_deploy
