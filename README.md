@@ -4,7 +4,8 @@
 azure tools are not that great documentated for monorepos.
 It's using:
 
-- Azure functions -> hono api
+- Azure functions ➡️ Hono api ✅
+- Azure Static Web Apps ➡️ Next.js app ✅
 
 # Getting started
 
@@ -37,6 +38,8 @@ I have tried a lot of things but the only way to make the azure functions to rec
 
 # Useful links
 
+Some useful links that are not that easy to find:
+
 - https://stackoverflow.com/questions/59745819/different-ways-to-publish-azure-function
 - https://github.com/microsoft/ApplicationInsights-node.js/issues/1102
 - https://tryzero.com/blog/deploying-azure-functions-with-pulumi-and-zero
@@ -48,3 +51,4 @@ I have tried a lot of things but the only way to make the azure functions to rec
 - [ ] Centralized logging
 - [ ] Auth
 - [ ] Transactional emails
+- [ ] Auth azure using OIDC (recommended by azure)
