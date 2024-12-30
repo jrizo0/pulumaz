@@ -25,7 +25,7 @@ jobs:
 
       - name: get outputs
         id: pulumi
-        run: echo "wwwName=$(pulumi stack output wwwName)" >> $GITHUB_ENV
+        run: echo "wwwName=$(pulumi stack output wwwName)" >> $GITHUB_OUTPUT
 
       - name: Azure Login
         uses: azure/login@v2
@@ -37,7 +37,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            echo "deploymentToken=$(az staticwebapp secrets list --name ${{ steps.pulumi.outputs.wwwName }} -o json | jq -r .properties.apiKey)" >> $GITHUB_ENV
+            echo "deploymentToken=$(az staticwebapp secrets list --name ${{ steps.pulumi.outputs.wwwName }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
 
       - name: Build And Deploy
         id: build_deploy
