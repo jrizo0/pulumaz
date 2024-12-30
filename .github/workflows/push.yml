@@ -25,7 +25,9 @@ jobs:
 
       - name: get outputs
         id: pulumi
-        run: echo "wwwName=$(pulumi stack output wwwName)" >> $GITHUB_OUTPUT
+        run: |
+          cd infra
+          echo "wwwName=$(pulumi stack output wwwName)" >> $GITHUB_OUTPUT
 
       - name: Azure Login
         uses: azure/login@v2
