@@ -24,7 +24,7 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
-      - name: pulumi outputs
+      - name: Pulumi outputs
         id: pulumi_out
         run: |
           cd infra
@@ -43,9 +43,6 @@ jobs:
           inlineScript: |
             echo "deploymentToken=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.wwwName }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
 
-      - name: build www
-        run: bun run --filter '*/www' build
-
       - name: Build And Deploy
         id: build_deploy
         uses: Azure/static-web-apps-deploy@v1
@@ -56,33 +53,5 @@ jobs:
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "packages/www/" # App source code path
-          # api_location: "" # Api source code path - optional
           output_location: ".next" # Built app content directory - optional
-          # app_build_command: "bun i && bun run --filter '*/www' build"
-          # skip_api_build: true
-          # skip_app_build: true
           ###### End of Repository/Build Configurations ######
-
-  # NOTE: Reference - https://github.com/jrizo0/nextjs-azure/blob/main/.github/workflows/azure-static-web-apps-polite-glacier-07081231e.yml
-  # build_and_deploy_job:
-  #   if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-  #   runs-on: ubuntu-latest
-  #   name: Build and Deploy Job
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         submodules: true
-  #         lfs: false
-  #     - name: Build And Deploy
-  #       id: builddeploy
-  #       uses: Azure/static-web-apps-deploy@v1
-  #       with:
-  #         azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_GLACIER_07081231E }}
-  #         repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-  #         action: "upload"
-  #         ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-  #         # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-  #         app_location: "/" # App source code path
-  #         api_location: "" # Api source code path - optional
-  #         output_location: ".next" # Built app content directory - optional
-  #         ###### End of Repository/Build Configurations ######
