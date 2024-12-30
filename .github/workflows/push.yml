@@ -23,8 +23,8 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
-      - name: get outputs
-        id: pulumi
+      - name: pulumi outputs
+        id: pulumi_out
         run: |
           cd infra
           echo "wwwName=$(pulumi stack output wwwName)" >> $GITHUB_OUTPUT
@@ -35,17 +35,18 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Azure CLI script
+        id: azure_cli
         uses: azure/cli@v2
         with:
           azcliversion: latest
           inlineScript: |
-            echo "deploymentToken=$(az staticwebapp secrets list --name ${{ steps.pulumi.outputs.wwwName }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
+            echo "deploymentToken=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.wwwName }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
 
       - name: Build And Deploy
         id: build_deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ steps.pulumi.outputs.deploymentToken }}
+          azure_static_web_apps_api_token: ${{ steps.azure_cli.outputs.deploymentToken }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
