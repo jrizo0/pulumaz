@@ -4,7 +4,7 @@ import * as random from "@pulumi/random";
 
 // Create an Azure Resource Group
 const resourceGroup = new azure.resources.ResourceGroup("resourceGroup", {
-  location: "canadacentral",
+  location: "eastus2",
 });
 
 // Create an Azure Static Web App
