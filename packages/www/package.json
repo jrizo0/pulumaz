@@ -1,5 +1,5 @@
 {
-  "name": "www",
+  "name": "@pulumaz/www",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,6 +24,6 @@
     "eslint-config-next": "14.2.22"
   },
   "engines": {
-    "node": "18.17.1"
+    "node": "20.11.0"
   }
 }

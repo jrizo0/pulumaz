@@ -43,6 +43,12 @@ jobs:
           inlineScript: |
             echo "deploymentToken=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.wwwName }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
 
+      - name: build www
+        run: |
+          cd packages/www
+          bun install
+          bun run build
+
       - name: Build And Deploy
         id: build_deploy
         uses: Azure/static-web-apps-deploy@v1
@@ -56,7 +62,8 @@ jobs:
           # api_location: "" # Api source code path - optional
           output_location: "packages/www/.next" # Built app content directory - optional
           # app_build_command: "bun i && bun run --filter '*/www' build"
-          CUSTOM_BUILD_COMMAND: "bun i && bun run --filter '*/www' build"
+          skip_api_build: true
+          skip_app_build: true
           ###### End of Repository/Build Configurations ######
 
   # NOTE: Reference - https://github.com/jrizo0/nextjs-azure/blob/main/.github/workflows/azure-static-web-apps-polite-glacier-07081231e.yml
