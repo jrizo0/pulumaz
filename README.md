@@ -20,6 +20,8 @@ After cloning the repo:
 
 ## Github actions
 
+The workflow does the following:
+
 1. set up bun, node, run bun i
 2. run pulumi up
 3. get the www name (gets a random name by azure) from pulumi output
@@ -27,6 +29,19 @@ After cloning the repo:
 5. build and deploy the static web app using previous values
    - this build and deploy is runned by the official Azure/static-web-apps-deploy which uses `npm` by default, you could override the build command but it didn't work for me.
      Also you could disable the build and build the app a step before but it didn't work either. My solution was to keep installs from the monorepo usable for npm as well (because it's used by default).
+
+## Database
+
+It uses Azure Database for Postgres with a flexible server. To connect to it:
+
+```bash
+export PGSSLMODE='require'
+export PGHOST="$(pulumi stack output fqdn)"
+export PGDATABASE='postgres'
+export PGUSER='postgres'
+export PGPASSWORD="$(pulumi stack output password --show-secrets)"
+psql
+```
 
 # Functions package deployment
 
