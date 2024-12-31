@@ -25,8 +25,8 @@ const staticWebApp = new azure.web.StaticSite("wwwappnextjs", {
   buildProperties: {
     appLocation: "packages/www/",
     outputLocation: "packages/www/.next",
-    // appBuildCommand: "npm run build:www"
-    appBuildCommand: "bun run --filter '*/www' build",
+    appBuildCommand: "npm run build --workspace=@pulumaz/www", // npm
+    // appBuildCommand: "bun run --filter '*/www' build", // bun
   },
 });
 
