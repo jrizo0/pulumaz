@@ -7,7 +7,6 @@ const token = new random.RandomPassword("wwwDeploymentToken", {
   special: false,
 });
 
-
 // Create an Azure Resource Group
 const resourceGroup = new azure.resources.ResourceGroup("resourceGroup", {
   location: "eastus2",
@@ -27,21 +26,23 @@ const staticWebApp = new azure.web.StaticSite("wwwappnextjs", {
     appLocation: "packages/www/",
     outputLocation: "packages/www/.next",
     // appBuildCommand: "npm run build:www"
-    appBuildCommand: "bun run --filter '*/www' build"
+    appBuildCommand: "bun run --filter '*/www' build",
   },
 });
 
-// const staticApp_secrets = staticWebApp.id.apply(() => // assert staticApp is created
-//   azure.web.listStaticSiteSecretsOutput({
-//     resourceGroupName: resourceGroup.name,
-//     name: staticWebApp.name,
-//   })
-// );
-// const deploymentToken = staticApp_secrets.properties.apply((properties) => properties.apiToken);
-
+// Can get the deployment token from the output of the static web app
+/*
+const staticApp_secrets = staticWebApp.id.apply(() => // assert staticApp is created
+  azure.web.listStaticSiteSecretsOutput({
+    resourceGroupName: resourceGroup.name,
+    name: staticWebApp.name,
+  })
+);
+const deploymentToken = staticApp_secrets.properties.apply((properties) => properties.apiToken);
+*/
 
 // Export the URL of the static web app
 export const outputs = {
   www: pulumi.interpolate`https://${staticWebApp.defaultHostname}`,
-  wwwName: staticWebApp.name
-}
+  wwwName: staticWebApp.name,
+};

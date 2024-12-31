@@ -4,7 +4,7 @@ import * as pulumi from "@pulumi/pulumi";
 
 export function getConnectionString(
   resourceGroupName: pulumi.Input<string>,
-  accountName: pulumi.Input<string>,
+  accountName: pulumi.Input<string>
 ): pulumi.Output<string> {
   // Retrieve the primary storage account key.
   const storageAccountKeys = storage.listStorageAccountKeysOutput({
@@ -21,7 +21,7 @@ export function signedBlobReadUrl(
   blob: storage.Blob,
   container: storage.BlobContainer,
   account: storage.StorageAccount,
-  resourceGroup: resources.ResourceGroup,
+  resourceGroup: resources.ResourceGroup
 ): pulumi.Output<string> {
   const blobSAS = storage.listStorageAccountServiceSASOutput({
     accountName: account.name,
