@@ -40,9 +40,10 @@ I have tried a lot of things but the only way to make the azure functions to rec
 
 Some useful links that are not that easy to find:
 
-- https://stackoverflow.com/questions/59745819/different-ways-to-publish-azure-function
-- https://github.com/microsoft/ApplicationInsights-node.js/issues/1102
-- https://tryzero.com/blog/deploying-azure-functions-with-pulumi-and-zero
+- [different ways to publish Azure Functions](https://stackoverflow.com/questions/59745819/different-ways-to-publish-azure-function)
+- [issue @azure/functions-core is only available at runtime](https://github.com/microsoft/ApplicationInsights-node.js/issues/1102)
+- [example of deploying azure functions with pulumi](https://tryzero.com/blog/deploying-azure-functions-with-pulumi-and-zero)
+- [example pulumi azure postgresql](https://github.com/rgl/pulumi-typescript-azure-native-postgres)
 
 # Roadmap
 
