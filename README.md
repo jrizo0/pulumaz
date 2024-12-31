@@ -46,9 +46,11 @@ Some useful links that are not that easy to find:
 
 # Roadmap
 
+- [x] Azure Functions -> Hono api
 - [x] Azure StaticWebApp -> Next.js Web App
 - [ ] Postgres DB linked to api and possible to Next.js server-side
 - [ ] Centralized logging
 - [ ] Auth
 - [ ] Transactional emails
 - [ ] Auth azure using OIDC (recommended by azure)
+- [ ] Pull request review (preview environments)
