@@ -44,5 +44,5 @@ const deploymentToken = staticApp_secrets.properties.apply((properties) => prope
 // Export the URL of the static web app
 export const outputs = {
   www: pulumi.interpolate`https://${staticWebApp.defaultHostname}`,
-  wwwName: staticWebApp.name,
+  www_name: staticWebApp.name,
 };
