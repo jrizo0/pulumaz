@@ -16,7 +16,7 @@ export default function Home() {
           setRes(time);
         }}
       >
-        Get time
+        Get time from server action
       </button>
       <span>{res !== null && <p>Server time: {res}</p>}</span>
     </div>

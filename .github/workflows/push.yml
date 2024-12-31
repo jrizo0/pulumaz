@@ -28,7 +28,7 @@ jobs:
         id: pulumi_out
         run: |
           cd infra
-          echo "wwwName=$(pulumi stack output wwwName)" >> $GITHUB_OUTPUT
+          echo "www_name=$(pulumi stack output www_name)" >> $GITHUB_OUTPUT
 
       - name: Azure Login
         uses: azure/login@v2
@@ -41,13 +41,13 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            echo "deploymentToken=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.wwwName }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
+            echo "deploy_token=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.www_name }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
 
       - name: Build And Deploy
         id: build_deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ steps.azure_cli.outputs.deploymentToken }}
+          azure_static_web_apps_api_token: ${{ steps.azure_cli.outputs.deploy_token }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
