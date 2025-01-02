@@ -15,6 +15,7 @@ on:
 
 jobs:
   variables:
+    name: Get Variables
     runs-on: ubuntu-latest
     outputs:
       swa_name: ${{ steps.pulumi_out.outputs.swa_name }}
