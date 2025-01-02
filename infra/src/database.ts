@@ -8,7 +8,7 @@ const password = new random.RandomPassword("DBPassword", {
   minLower: 1,
   minUpper: 1,
   minNumeric: 1,
-  minSpecial: 1,
+  special: false
 });
 
 const rgroup = new azure.resources.ResourceGroup("rgdatabase", {
@@ -51,10 +51,10 @@ const db_host = database.fullyQualifiedDomainName;
 const db_password = password.result;
 const db_user = database.administratorLogin;
 
-export const dbConnection = pulumi.interpolate`postgres://${db_user}:${db_password}@${db_host}?sslmode=require`;
+export const DATABASE_URL = pulumi.interpolate`postgres://${db_user}:${db_password}@${db_host}?sslmode=require`;
 
 export const outputs = {
   db_host,
   db_password,
-  db_connection: dbConnection,
+  DATABASE_URL,
 };

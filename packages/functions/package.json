@@ -15,7 +15,7 @@
   "dependencies": {
     "@azure/functions": "^4.6.0",
     "hono": "^4.6.14",
-    "@pulumaz/core": "0.0.0"
+    "@pulumaz/core": "*"
   },
   "devDependencies": {
     "@types/node": "20.x",

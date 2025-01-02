@@ -2,7 +2,7 @@ import * as azurenative from "@pulumi/azure-native";
 import * as pulumi from "@pulumi/pulumi";
 import { getConnectionString, signedBlobReadUrl } from "./helpers";
 import { local } from "@pulumi/command";
-import { dbConnection } from "./database";
+import { DATABASE_URL } from "./database";
 
 const resourceGroup = new azurenative.resources.ResourceGroup("resourcegroup", {
   location: "canadacentral",
@@ -106,7 +106,7 @@ const app = new azurenative.web.WebApp("api", {
       },
       { name: "UPDATE_HASH", value: Date.now().toString() },
       {
-        name: "DATABASE_URL", value: dbConnection
+        name: "DATABASE_URL", value: DATABASE_URL
       }
     ],
     http20Enabled: true,

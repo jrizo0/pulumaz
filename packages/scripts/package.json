@@ -2,11 +2,13 @@
   "name": "@pulumaz/scripts",
   "version": "0.0.0",
   "dependencies": {
-    "@pulumaz/core": "*"
+    "@pulumaz/core": "*",
+    "tsx": "^4.19.2"
   },
-  "scripts": {},
+  "scripts": {
+    "shell": "dotenv -e ../../.env -- tsx"
+  },
   "devDependencies": {
-    "@types/node": "^20.14.11",
-    "tsx": "^4.7.2"
+    "@types/node": "^20.14.11"
   }
 }
