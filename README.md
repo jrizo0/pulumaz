@@ -1,8 +1,9 @@
 # Pulumaz
 
-**Monorepo** using pulumi for azure infraestructure, using mainly `bun`, but could be used with other package managers. Important to note that
-azure tools are not that great documentated for monorepos.
-It's using:
+**Monorepo** using `pulumi` for azure infraestructure, using mainly `bun`, but could be used with other package managers. 
+Important to note that azure tools are not that great documentated for monorepos.
+
+This repo is using:
 
 - Azure functions ➡️ Hono api ✅
 - Azure Static Web Apps ➡️ Next.js app ✅
@@ -41,9 +42,22 @@ It uses Azure Database for Postgres with a flexible server. To connect to it:
 psql $(pulumi stack output DATABASE_URL --show-secrets)
 ```
 
-## Azure Static Web App
+## Azure Static Web App (SWA) (Next.js)
+
+### Deployment
+
+The only good way that I found to deploy is using the [Azure/static-web-apps-deploy](https://github.com/Azure/static-web-apps-deploy) action, 
+a pain point on this is how to add env vars to the Next.js deployment.
+
+Also I didn't found a way to deploy the zip file using pulumi.
+
+### Connection with DB
 
 Azure provides a managed way to deploy a CRUD api and graphQL api called `swa-db-connection`. We are not using it in this repo. [official tutorial here](https://learn.microsoft.com/en-us/azure/static-web-apps/database-azure-sql?tabs=bash&pivots=static-web-apps-rest)
+
+### Adding env vars
+
+TO-DO
 
 ## Azure Functions
 

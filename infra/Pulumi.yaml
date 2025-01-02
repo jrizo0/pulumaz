@@ -4,6 +4,7 @@ runtime:
   name: nodejs
   options:
     packagemanager: pnpm
+    # This fixed an issue with github actions erroring example: https://github.com/jrizo0/pulumaz/actions/runs/12507306441/job/34893613129
     nodeargs: --max-old-space-size=4096
 config:
   pulumi:tags:
