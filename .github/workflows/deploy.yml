@@ -1,0 +1,59 @@
+name: Pulumi deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install
+      - uses: pulumi/actions@v6
+        with:
+          command: up
+          stack-name: dev
+          work-dir: ./infra
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+      # - name: Pulumi outputs
+      #   id: pulumi_out
+      #   run: |
+      #     cd infra
+      #     echo "swa_name=$(pulumi stack output swa_name)" >> $GITHUB_OUTPUT
+      #   env: 
+      #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      #
+      # - name: Azure Login
+      #   uses: azure/login@v2
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+      #
+      # - name: Azure CLI script
+      #   id: azure_cli
+      #   uses: azure/cli@v2
+      #   with:
+      #     azcliversion: latest
+      #     inlineScript: |
+      #       echo "deploy_token=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.swa_name }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
+      #
+      # - name: Build And Deploy
+      #   id: build_deploy
+      #   uses: Azure/static-web-apps-deploy@v1
+      #   with:
+      #     azure_static_web_apps_api_token: ${{ steps.azure_cli.outputs.deploy_token }}
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+      #     action: "upload"
+      #     ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+      #     # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+      #     app_location: "packages/www/" # App source code path
+      #     output_location: ".next" # Built app content directory - optional
+      #     ###### End of Repository/Build Configurations ######

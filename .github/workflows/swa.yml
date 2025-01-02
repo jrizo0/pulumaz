@@ -1,34 +1,28 @@
-name: Pulumi
+name: Azure Static Web Apps CI/CD
+
 on:
   push:
     branches:
       - main
-jobs:
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install
-      - uses: pulumi/actions@v6
-        with:
-          command: up
-          stack-name: dev
-          work-dir: ./infra
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
 
+jobs:
+  variables:
+    runs-on: ubuntu-latest
+    outputs:
+      swa_name: ${{ steps.pulumi_out.outputs.swa_name }}
+      deploy_token: ${{ steps.azure_cli.outputs.deploy_token }}
+    steps:
       - name: Pulumi outputs
         id: pulumi_out
         run: |
           cd infra
           echo "swa_name=$(pulumi stack output swa_name)" >> $GITHUB_OUTPUT
+        env: 
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
       - name: Azure Login
         uses: azure/login@v2
@@ -43,11 +37,21 @@ jobs:
           inlineScript: |
             echo "deploy_token=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.swa_name }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
 
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    needs: variables
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          lfs: false
       - name: Build And Deploy
-        id: build_deploy
+        id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ steps.azure_cli.outputs.deploy_token }}
+          azure_static_web_apps_api_token: ${{ needs.variables.outputs.deploy_token }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
@@ -55,3 +59,20 @@ jobs:
           app_location: "packages/www/" # App source code path
           output_location: ".next" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+
+  close_pull_request_job:
+    # skip remove env for 'dev' branch
+    if: >
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      github.event.pull_request.base.ref != 'dev'
+    needs: variables
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          action: "close"
+          azure_static_web_apps_api_token: ${{ needs.variables.outputs.deploy_token }}
