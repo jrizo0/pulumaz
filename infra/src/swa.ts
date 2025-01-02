@@ -2,11 +2,6 @@ import * as pulumi from "@pulumi/pulumi";
 import * as azure from "@pulumi/azure-native";
 import * as random from "@pulumi/random";
 
-const token = new random.RandomPassword("wwwDeploymentToken", {
-  length: 32,
-  special: false,
-});
-
 // Create an Azure Resource Group
 const resourceGroup = new azure.resources.ResourceGroup("resourceGroup", {
   location: "eastus2",
@@ -24,7 +19,7 @@ const staticWebApp = new azure.web.StaticSite("wwwappnextjs", {
   branch: "main",
   buildProperties: {
     appLocation: "packages/www/",
-    outputLocation: "packages/www/.next",
+    outputLocation: ".next",
     appBuildCommand: "npm run build --workspace=@pulumaz/www", // npm
     // appBuildCommand: "bun run --filter '*/www' build", // bun
   },
@@ -43,6 +38,6 @@ const deploymentToken = staticApp_secrets.properties.apply((properties) => prope
 
 // Export the URL of the static web app
 export const outputs = {
-  www: pulumi.interpolate`https://${staticWebApp.defaultHostname}`,
-  www_name: staticWebApp.name,
+  swa_url: pulumi.interpolate`https://${staticWebApp.defaultHostname}`,
+  swa_name: staticWebApp.name,
 };

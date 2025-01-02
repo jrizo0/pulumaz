@@ -28,7 +28,7 @@ jobs:
         id: pulumi_out
         run: |
           cd infra
-          echo "www_name=$(pulumi stack output www_name)" >> $GITHUB_OUTPUT
+          echo "swa_name=$(pulumi stack output swa_name)" >> $GITHUB_OUTPUT
 
       - name: Azure Login
         uses: azure/login@v2
@@ -41,7 +41,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            echo "deploy_token=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.www_name }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
+            echo "deploy_token=$(az staticwebapp secrets list --name ${{ steps.pulumi_out.outputs.swa_name }} -o json | jq -r .properties.apiKey)" >> $GITHUB_OUTPUT
 
       - name: Build And Deploy
         id: build_deploy

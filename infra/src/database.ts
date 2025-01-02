@@ -1,3 +1,4 @@
+import * as pulumi from "@pulumi/pulumi";
 import * as azure from "@pulumi/azure-native";
 import * as random from "@pulumi/random";
 
@@ -14,7 +15,7 @@ const rgroup = new azure.resources.ResourceGroup("rgdatabase", {
   location: "eastus2",
 });
 
-const database = new azure.dbforpostgresql.Server("database", {
+export const database = new azure.dbforpostgresql.Server("database", {
   resourceGroupName: rgroup.name,
   location: rgroup.location,
   availabilityZone: "1",
@@ -46,9 +47,14 @@ new azure.dbforpostgresql.FirewallRule("all", {
   endIpAddress: "255.255.255.255",
 });
 
-const fqdn = database.fullyQualifiedDomainName;
+const db_host = database.fullyQualifiedDomainName;
+const db_password = password.result;
+const db_user = database.administratorLogin;
+
+export const dbConnection = pulumi.interpolate`postgres://${db_user}:${db_password}@${db_host}`;
 
 export const outputs = {
-  fqdn,
-  password: password.result,
+  db_host,
+  db_password,
+  db_connection: dbConnection,
 };
