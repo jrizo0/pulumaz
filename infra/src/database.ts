@@ -51,7 +51,7 @@ const db_host = database.fullyQualifiedDomainName;
 const db_password = password.result;
 const db_user = database.administratorLogin;
 
-export const dbConnection = pulumi.interpolate`postgres://${db_user}:${db_password}@${db_host}`;
+export const dbConnection = pulumi.interpolate`postgres://${db_user}:${db_password}@${db_host}?sslmode=require`;
 
 export const outputs = {
   db_host,
