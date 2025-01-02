@@ -6,6 +6,7 @@ It's using:
 
 - Azure functions ➡️ Hono api ✅
 - Azure Static Web Apps ➡️ Next.js app ✅
+- Azure Database for Postgres ➡️ Postgres DB ✅
 
 # Getting started
 
@@ -17,6 +18,8 @@ After cloning the repo:
   - Create an app registration with (az active-directory service-principle): `az ad sp create-for-rbac --name "pulumaz" --role contributor --scopes /subscriptions/{sub-id} --sdk-auth`
 
 # Overview
+
+This is an overview of how the repo is built and structured, it includes understandings of the different parts of the repo and some pain points encountered.
 
 ## Github actions
 
@@ -35,25 +38,26 @@ The workflow does the following:
 It uses Azure Database for Postgres with a flexible server. To connect to it:
 
 ```bash
-export PGSSLMODE='require'
-export PGHOST="$(pulumi stack output fqdn)"
-export PGDATABASE='postgres'
-export PGUSER='postgres'
-export PGPASSWORD="$(pulumi stack output password --show-secrets)"
-psql
+psql $(pulumi stack output DATABASE_URL --show-secrets)
 ```
 
-# Functions package deployment
+## Azure Static Web App
+
+Azure provides a managed way to deploy a CRUD api and graphQL api called `swa-db-connection`. We are not using it in this repo. [official tutorial here](https://learn.microsoft.com/en-us/azure/static-web-apps/database-azure-sql?tabs=bash&pivots=static-web-apps-rest)
+
+## Azure Functions
+
+### Deployment
 
 I have tried a lot of things but the only way to make the azure functions to recognize the functions is using the current way, meaning:
 
 - create an extra package with the output of the build and installing the package @azure/functions to it like a orphan repo (esbuild + build.sh or tsc + build.sh).
-- need the linux version of AzureFunctions [see github issue](https://github.com/Azure/azure-functions-nodejs-library/issues/260#issuecomment-2133675709),
+- only works with the linux version of AzureFunctions [see github issue](https://github.com/Azure/azure-functions-nodejs-library/issues/260#issuecomment-2133675709),
 - from the [same issue](https://github.com/Azure/azure-functions-nodejs-library/issues/260#issuecomment-2241240564) I got the `build.sh` script.
 
-# Useful links
+# Useful resources
 
-Some useful links that are not that easy to find:
+Some useful resources researched:
 
 - [different ways to publish Azure Functions](https://stackoverflow.com/questions/59745819/different-ways-to-publish-azure-function)
 - [issue @azure/functions-core is only available at runtime](https://github.com/microsoft/ApplicationInsights-node.js/issues/1102)
@@ -62,11 +66,17 @@ Some useful links that are not that easy to find:
 
 # Roadmap
 
+## Main milestones
+
 - [x] Azure Functions -> Hono api
 - [x] Azure StaticWebApp -> Next.js Web App
-- [ ] Postgres DB linked to api and possible to Next.js server-side
+- [x] Postgres DB linked to api and possible to Next.js server-side
 - [ ] Centralized logging
 - [ ] Auth
 - [ ] Transactional emails
-- [ ] Auth azure using OIDC (recommended by azure)
 - [ ] Pull request review (preview environments)
+
+## Nice to have
+
+- [ ] Auth azure CLI in github actions using OIDC (recommended by azure)
+- [ ] Postgres DB linked to Next.js server-side
