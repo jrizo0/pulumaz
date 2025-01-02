@@ -1,8 +1,13 @@
 name: Pulumi deploy
+
 on:
   push:
     branches:
       - main
+
+concurrency: 
+  group: ${{ github.ref }}
+
 jobs:
   deploy:
     name: Deploy
