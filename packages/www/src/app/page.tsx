@@ -10,13 +10,13 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center h-screen p-4">
       <h1 className="text-3xl font-bold py-4">Hello world!</h1>
       <button
-        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-900"
         onClick={async () => {
           const { time } = await getTime();
           setRes(time);
         }}
       >
-        Get time from server action
+        Get time from server action (async)
       </button>
       <span>{res !== null && <p>Server time: {res}</p>}</span>
     </div>
