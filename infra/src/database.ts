@@ -35,7 +35,6 @@ export const database = new azure.dbforpostgresql.Server("database", {
     name: "Standard_B1ms", // 1 vCore. 2 GiB RAM.
   },
   storage: {
-    // storageSizeGB: 32,
     storageSizeGB: 32,
   },
 });
