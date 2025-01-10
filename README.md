@@ -89,6 +89,8 @@ Some useful resources researched:
 - [ ] Auth
 - [ ] Transactional emails
 - [ ] Pull request review (preview environments)
+  - [x] SWA deployment
+  - [ ] Infra deployment, reusing expencive infrastructure
 
 ## Nice to have
 

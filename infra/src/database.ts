@@ -31,7 +31,7 @@ export const database = new azure.dbforpostgresql.Server("database", {
   sku: {
     // tier: "GeneralPurpose",
     // name: "Standard_D2ds_v4", // 2 vCore. 8 GiB RAM.
-    tier: "Burstable",
+    tier: azure.dbforpostgresql.SkuTier.Burstable,
     name: "Standard_B1ms", // 1 vCore. 2 GiB RAM.
   },
   storage: {
@@ -50,7 +50,7 @@ const db_host = database.fullyQualifiedDomainName;
 const db_password = password.result;
 const db_user = database.administratorLogin;
 
-export const DATABASE_URL = pulumi.interpolate`postgres://${db_user}:${db_password}@${db_host}?sslmode=require`;
+export const DATABASE_URL = pulumi.interpolate`postgres://${db_user}:${db_password}@${db_host}`;
 
 export const outputs = {
   db_host,
