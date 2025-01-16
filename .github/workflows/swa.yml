@@ -13,6 +13,10 @@ on:
     paths:
       - 'packages/www/**'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   variables:
     name: Get Variables
