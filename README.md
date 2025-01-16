@@ -95,5 +95,5 @@ Some useful resources researched:
 
 ## Nice to have
 
-- [ ] Auth azure CLI in github actions using OIDC (recommended by azure)
+- [x] Auth azure CLI in github actions using OIDC (recommended by azure)
 - [ ] Postgres DB linked to Next.js server-side
