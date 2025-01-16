@@ -64,6 +64,15 @@ jobs:
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
+        env:
+          PRE_BUILD_COMMAND: npm install -g bun && bun install
+          CUSTOM_BUILD_COMMAND: bun run build && cp -r .next/standalone/packages/www/. .next/standalone
+          VERBOSE: true
+          ###################
+          ### Env vars:
+          ###################
+          NEXT_PUBLIC_API_URL: ${{ needs.variables.outputs.swa_url }}
+          DATABASE_URL: ${{ needs.variables.outputs.DATABASE_URL }}
         with:
           azure_static_web_apps_api_token: ${{ needs.variables.outputs.deploy_token }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)

@@ -36,6 +36,8 @@ This is an overview of how the repo is built and structured, it includes underst
 
 ## Github actions
 
+### deploy.yml
+
 The workflow does the following:
 
 1. set up bun, node, run bun i
@@ -45,6 +47,15 @@ The workflow does the following:
 5. build and deploy the static web app using previous values
    - this build and deploy is runned by the official Azure/static-web-apps-deploy which uses `npm` by default, you could override the build command but it didn't work for me.
      Also you could disable the build and build the app a step before but it didn't work either. My solution was to keep installs from the monorepo usable for npm as well (because it's used by default).
+
+### swa.yml
+
+1. get variables from pulumi and azure cli (deploy token)
+2. build and deploy the static web app using previous values for main branch and pr to new environments. also removes stages when pr is closed
+    - running with next.js standalone mode
+    - `PRE_BUILD_COMMAND: npm install -g bun && bun install` to install dependencies and use bun
+    - `CUSTOM_BUILD_COMMAND: bun run build && cp -r .next/standalone/packages/www/. .next/standalone` to copy the www folder to the .next folder (workaround)
+    - set up env vars
 
 ## Database
 
