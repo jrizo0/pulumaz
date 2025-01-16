@@ -77,6 +77,7 @@ Some useful resources researched:
 - [issue @azure/functions-core is only available at runtime](https://github.com/microsoft/ApplicationInsights-node.js/issues/1102)
 - [example of deploying azure functions with pulumi](https://tryzero.com/blog/deploying-azure-functions-with-pulumi-and-zero)
 - [example pulumi azure postgresql](https://github.com/rgl/pulumi-typescript-azure-native-postgres)
+- [script oidc setup](https://github.com/jongio/github-azure-oidc)
 
 # Roadmap
 
