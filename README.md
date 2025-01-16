@@ -13,10 +13,22 @@ This repo is using:
 
 After cloning the repo:
 
-- Change all references to `pulumaz` to your project/org name
+- Change all references to `pulumaz` to your project or org name
 - Remove the package `functions-build-target` (was just for reference for how the output build of the functions pckg should look like)
-- Add github secrets: `ARM_CLIENT_ID`, `ARM_CLIENT_SECRET`, `ARM_SUBSCRIPTION_ID`, `ARM_TENANT_ID`, `PULUMI_ACCESS_TOKEN`, `AZURE_CREDENTIALS`
-  - Create an app registration with (az active-directory service-principle): `az ad sp create-for-rbac --name "pulumaz" --role contributor --scopes /subscriptions/{sub-id} --sdk-auth`
+- Run `az login`
+- Run `pulumi org set-default {org-name}`
+- Add github secrets: `PULUMI_ACCESS_TOKEN`
+- Configure Pulumi.yml file with your pulumi stack name, app name and app description
+
+## If you want to use credentials to deploy
+- Create an app registration with (az active-directory service-principle): `az ad sp create-for-rbac --name "pulumaz" --role contributor --scopes /subscriptions/{sub-id} --sdk-auth`
+- With the output add github secrets: `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `AZURE_SUBSCRIPTION_ID`, `AZURE_TENANT_ID`, `AZURE_CREDENTIALS`
+
+## If you want to use OIDC
+- run `./oidc.sh app-name gh-org-name/gh-repo-name ./fics.json`, this will create all needed resources for OIDC, and set up the GH secrets `AZURE_CLIENT_ID`, `AZURE_SUBSCRIPTION_ID`, `AZURE_TENANT_ID` using the GH cli
+  - app-name: name of the app registration, this will create an Active Directory App Registration with the name `app-name`
+  - gh-org-name/gh-repo-name: the github org and repo name, this will create a service principal with the name `app-name` in the `gh-org-name` org
+  - fics.json: the Federated Identity Credentials file containing wich fics to create (for main branch, master branch and pull request branch are set by default)
 
 # Overview
 
