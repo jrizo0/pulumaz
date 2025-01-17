@@ -80,7 +80,7 @@ Azure provides a managed way to deploy a CRUD api and graphQL api called `swa-db
 
 ### Adding env vars
 
-TO-DO
+Only way is to add the env vars in the github action. That's why we pulled all the needed env vars from pulumi and azure cli in a previous step, and then we add them to the `build_and_deploy_job` in the env section.
 
 ## Azure Functions
 
@@ -100,7 +100,7 @@ Some useful resources researched:
 - [issue @azure/functions-core is only available at runtime](https://github.com/microsoft/ApplicationInsights-node.js/issues/1102)
 - [example of deploying azure functions with pulumi](https://tryzero.com/blog/deploying-azure-functions-with-pulumi-and-zero)
 - [example pulumi azure postgresql](https://github.com/rgl/pulumi-typescript-azure-native-postgres)
-- [script oidc setup](https://github.com/jongio/github-azure-oidc), from script just changed the creating role assignment line adding `--scope /subscriptions/$SUB_ID` scope is required value
+- [script oidc setup](https://github.com/jongio/github-azure-oidc), from script just changed the creating role assignment line adding `--scope /subscriptions/$SUB_ID` (scope is required value)
 
 # Roadmap
 
