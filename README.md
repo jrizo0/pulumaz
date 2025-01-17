@@ -101,6 +101,8 @@ Some useful resources researched:
 - [example of deploying azure functions with pulumi](https://tryzero.com/blog/deploying-azure-functions-with-pulumi-and-zero)
 - [example pulumi azure postgresql](https://github.com/rgl/pulumi-typescript-azure-native-postgres)
 - [script oidc setup](https://github.com/jongio/github-azure-oidc), from script just changed the creating role assignment line adding `--scope /subscriptions/$SUB_ID` (scope is required value)
+- [issue swa deployment, monorepo: www referencing another repo, solved by using standalone and copying output](https://github.com/Azure/static-web-apps/issues/1059#issuecomment-1638817705)
+- [pulumi/azure-native tsserver issues "solutions"](https://archive.pulumi.com/t/9702735/hi-anyone-else-experiencing-issues-with-the-ts-server-crashi)
 
 # Roadmap
 
